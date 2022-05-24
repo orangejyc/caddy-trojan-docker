@@ -5,3 +5,5 @@ https://github.com/lxhao61/integrated-examples/releases/download/20220507/caddy_
 
 
 docker build -t orangejyc/caddy-trojan .
+
+docker run -d -p 80:80 -p 443:443 -e MY_DOMAIN= -e MY_PWD orangejyc/caddy-trojan
