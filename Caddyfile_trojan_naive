@@ -1,0 +1,42 @@
+{
+	order trojan before route
+	admin off
+	log { 
+		output file /var/log/caddy/access.log
+		level INFO
+	}
+	servers :443 {
+		listener_wrappers {
+			trojan 
+		}
+		protocol {
+			allow_h2c 
+		}
+	}
+}
+
+:443, {$MY_DOMAIN} { 
+	tls {
+		ciphers TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+		alpn h2 http/1.1
+	}
+
+	trojan {
+		user {$MY_PWD}
+		connect_method
+		websocket 
+	}
+
+	@host {
+		host {$MY_DOMAIN}
+	}
+	route @host {
+		header {
+			Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" 
+		}
+#		file_server {
+#			root /var/www/html 
+#		}
+               reverse_proxy * https://shopee.co.id
+	}
+}
