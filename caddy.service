@@ -3,7 +3,7 @@ Description=caddy-service
 After=syslog.target
 
 [Service]
-WorkingDirectory=/var/caddy
+#WorkingDirectory=/var/caddy
 User=root
 ExecStart=/usr/bin/caddy run --config  /etc/caddy/Caddyfile
 StandardOutput=syslog
