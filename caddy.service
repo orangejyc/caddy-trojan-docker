@@ -1,0 +1,17 @@
+[Unit]
+Description=caddy-service
+After=syslog.target
+
+[Service]
+WorkingDirectory=/var/caddy
+User=root
+ExecStart=/usr/bin/caddy run --config  /etc/caddy/Caddyfile
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=caddy
+SuccessExitStatus=143
+Restart=on-failure
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target
